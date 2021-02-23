@@ -1,92 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Socket.IO chat</title>
-    <style>
-        body {
-            margin: 0;
-            padding-bottom: 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        #input:focus {
-            outline: none;
-        }
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
-
-        #messages>li:nth-child(odd) {
-            background: #efefef;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wassup chat app</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
+    <section class="chat__section">
+        <div class="brand">
+            <img height="40" src="/wassup.png" alt="">
+            <h1>Wassup</h1>
+        </div>
+        <div class="message__area"></div>
+        <div>
+            <textarea id="textarea" cols="30" rows="1" placeholder="Write a message..."></textarea>
+        </div>
+    </section>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-
-        let socket = io();
-         let text = "hellow"
-         //console.log(text);
-       
-    // Send to server 
-    socket.emit('chatMessage', text);
-
-
-// Recieve messages 
-socket.on('message', (msg) => {
-    console.log(msg);
-})
-
-
-
-
-    </script>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input type="text" id="input" autocomplete="off" />
-        <button type="submit">Send</button>
-    </form>
+    <script src="/client.js"></script>
 </body>
 
 </html>

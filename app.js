@@ -1,24 +1,28 @@
-const { Socket } = require('dgram');
+const express = require('express')
+const app = express()
+const http = require('http').createServer(app)
 
-const app = require('express')();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const PORT = process.env.PORT || 3000
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-});
-
-io.on('connection', (socket)=>{
-    //console.log(socket.id);
-    // return false;
-    console.log('user connected');
-    socket.on('chatMessage', (data)=>{
-        console.log(data)
-        socket.emit('message', "this is first hellow")
-        //console.log('message : ' + msg);
-    })
+http.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
 
-http.listen(2000, () => {
-  console.log('listening on *:3000');
-});
+app.use(express.static(__dirname + '/public'))
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html')
+})
+
+// Socket 
+const io = require('socket.io')(http)
+
+let clients = 0;
+io.on('connection', (socket) => {
+  clients++;
+    console.log('No. of clients connected : ' + clients)
+    socket.on('message', (msg) => {
+        socket.broadcast.emit('message1', msg)
+    })
+
+})

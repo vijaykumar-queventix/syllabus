@@ -1,28 +1,35 @@
-const express = require('express')
-const app = express()
-const http = require('http').createServer(app)
+const express = require('express');
+const { send } = require('process');
+const app = express();
+const dotenv = require('dotenv').config();
+const mongoose = require('mongoose');
+const userroutes = require('./routes/users')
+const bodyParser = require('body-parser');
+const path = require('path');
+const users = require('./models/userschema');
 
-const PORT = process.env.PORT || 3000
+// defining port
+const port = process.env.PORT || 3000;
 
-http.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+// connecting to db
+const { dbConnection } = require('./database');
+const { pathToFileURL } = require('url');
+dbConnection();
 
-app.use(express.static(__dirname + '/public'))
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
-})
+// parse application/jsonggjuhy
+app.use(bodyParser.json())
 
-// Socket 
-const io = require('socket.io')(http)
+// Setup Static Path
+app.use(express.static("public"));
+//view engine setup
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
-let clients = 0;
-io.on('connection', (socket) => {
-  clients++;
-    console.log('No. of clients connected : ' + clients)
-    socket.on('message', (msg) => {
-        socket.broadcast.emit('message1', msg)
-    })
+app.use('/', userroutes);
 
-})
+app.listen(port, () => {
+    console.log(`server running on port ${port}`);
+});

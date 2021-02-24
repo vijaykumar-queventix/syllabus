@@ -47,5 +47,8 @@ router.delete('/delete/:id', JwtAuth ,usercontroller.delete)
 // upload image api using multer
 // router.post('/upload', upload.single('file'), usercontroller.upload_post)
 
+// csv post api
+router.post('/csv',usercontroller.csv_post);
+
 
 module.exports = router

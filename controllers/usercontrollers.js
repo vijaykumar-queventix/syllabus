@@ -5,6 +5,9 @@ const usermodel = require('../models/userschema');
 const jwt = require('jsonwebtoken');
 const localStorage = require('localStorage');
 const session = require('express-session');
+const fs = require('fs');
+const csv = require('fast-csv');
+const csvModel = require('../models/forCSV');
 
 const bcrypt = require('bcrypt');
 const { findByIdAndUpdate } = require('../models/userschema');
@@ -230,4 +233,43 @@ exports.upload_post = async (req, res, next) => {
 
     //res.json({ fileUrl: 'http://192.168.0.7:3000/images/' + req.file.filename });
     //res.send('succuess')
+}
+
+
+exports.csv_post = async (req, res) => {
+
+    csv
+        .parseFile('/media/vijay/7846B0D246B091FC/syllabus/' + 'employee.csv', { headers: true })
+        .on("data", async function (data) {
+            console.log(data);
+            //Removes spaces from property value in-case it does have
+            for (var key in data) {
+                //console.log('##########',data['name']);
+                data[key] = data[key].trim();
+            }
+           
+            //Create a employee Object and assign all values for it to save in database
+            var insertedData = new csvModel({
+                name: data['name'],
+                age: data['age'],
+                subject: data['subject'],
+                city: data['city']
+            });
+            
+            try {
+                //save in database
+                let savedData = await insertedData.save();
+                return res.status(200).json({
+                    'statusCode': 200,
+                    'message': 'Data inserted successfully in db',
+                    'data': insertedData
+                })
+            } catch (error) {
+                return res.status(200).json({
+                    'statusCode': 400,
+                    'message': 'Error While Saving Data Into Db',
+                    'Error': error
+                })
+            }
+        })
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        console.log('this is regular expression tutorial');
+        let reg = /testing/;                // regular expression literal(difine by ForwardSlash);
+        // reg = /testing/g ;                  // g means global
+        // reg = /testing/i  ;                  // i means case insensitve
+        console.log(reg)
+        console.log(reg.source);
+
+
+        // functions to match regular expressions
+        let str = "this is great example of testing regular expression, and this is testing"
+
+        // 1. exec()   - this function will return an array for match and null for no match
+        let result = reg.exec(str);
+        console.log(result);
+
+
+        // 2. test() - this function returns true if matched and false if not
+        let result2 = reg.test(str);
+        console.log(result2);
+
+
+        // 3. match()  -this will return an array of result or null
+        //let result3 = reg.match(str);               // this will gives an error, match always executes in opposite way
+        let result3 = str.match(reg);                  // this will not give an error, works same as excu() but in opposite way
+        console.log(result3);
+
+        // 4 . search()   - Retuns index of first match otherwise -1
+        let result4 = str.search(reg);
+        console.log('this is search function ', result4);
+
+        // 5. replace()  -- returns new replaced string with all the replacements(if no flag is given only first match will replace)
+        let result5 = str.replace(reg, 'ReplaceFunctionsUsedHere');         // this will replace string of reg with ReplaceFunctionsUsedHere if matched
+        console.log(result5);
+
+        console.log('#####################################################');
+        // metacharacter symbols
+        let regex = /testslkjlsjs/
+        regex = /^te/                       // ^ symbol defines start with
+        regex = /ing$/                       // $ symbol defines ends with
+        regex = /te.ting/                    // matches any one character
+        regex = /t*ng/                        // matches any 0 or more characters 
+        regex = /te?stin?g/                     // ? after character means that character is optional
+        regex = /t\*esting/
+
+        // charatcter sets
+        regex = /te[a-z]ting/           // can be any character from a to z
+        regex = /te[atv]ting/           // can be a, t , v
+        regex = /te[ats]ting/           // can be a, t, s
+
+
+        // quantifiers
+        regex = /te{2}sting/            // here matches if 'e' come exactly 2 times
+        regex = /te{0,2}sting/          // here matches if 'e' come exactly 0-2(0,1,2) times
+
+        let str2 = "testing";
+        let result6 = regex.exec(str2);
+
+        if (regex.exec(str2)) {
+            console.log(`The String ${str2} matches the expression ${regex.source}`);
+        }else{
+            console.log(`The String ${str2} doesn't matches the expression ${regex.source}`);
+        }
+
+
+    </script>
+
+</body>
+
+</html>

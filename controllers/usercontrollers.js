@@ -3,7 +3,8 @@ const usermodel = require('../models/userschema');
 //const passport = require('passport');
 //const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const localStorage = require('localStorage')
+const localStorage = require('localStorage');
+const session = require('express-session');
 
 const bcrypt = require('bcrypt');
 const { findByIdAndUpdate } = require('../models/userschema');
@@ -24,14 +25,19 @@ exports.login_get = (req, res) => {
 
 exports.dashboard_get = (req, res) => {
     let local = localStorage;
-    let email = localStorage.getItem('loggedEmail')
-    let pass = localStorage.getItem('loggedPassword');
+    let email = localStorage.getItem('email');
+    let loggedEmail = localStorage.getItem('loggedEmail');
+    let token = localStorage.getItem('loggedToken');
+    let loggedEmail2 = req.session.loggedEmail;
+    console.log(loggedEmail2);
 
     res.status(200).json({
         'statusCode': 200,
-        'localstorage' : local, 
-        'email' : email,
-        'password' : pass,
+        'allDate': local,
+        'email': email,
+        'loggedEmail': loggedEmail,
+        'loggedEmail2': loggedEmail2,
+        'token': token,
         'message': 'this is dashboard page'
     })
 }
@@ -122,8 +128,10 @@ exports.login_post = async (req, res) => {
     // finding User data to send in response
     let responseData = await usermodel.findOne({ email: loginEmail });
     localStorage.setItem('loggedEmail', validuser.email);
-    localStorage.setItem('loggedPassword', loginPassword);
-
+    console.log(token);
+    localStorage.setItem('loggedToken', token);
+    localStorage.setItem('email', "gurpreet@gmail.com");
+    req.session.loggedEmail = "testingsession";
     res.redirect('/dashboard');
 
 
@@ -207,7 +215,7 @@ exports.upload_post = async (req, res, next) => {
             'statusCode': 401,
             'mesaage': 'File Not Found'
         });
-        
+
     }
 
     let image = new uploadModel({

@@ -7,6 +7,7 @@ const userroutes = require('./routes/users')
 const bodyParser = require('body-parser');
 const path = require('path');
 const users = require('./models/userschema');
+const session = require('express-session');
 
 // defining port
 const port = process.env.PORT || 3000;
@@ -27,6 +28,14 @@ app.use(express.static("public"));
 //view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
+// express session
+app.use(session({
+  secret: 'secretkey',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 app.use('/', userroutes);
 

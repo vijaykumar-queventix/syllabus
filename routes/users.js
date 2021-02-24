@@ -35,7 +35,7 @@ router.post('/login',  usercontroller.login_post);
 
 
 //dashboard get api
-router.get('/dashboard', usercontroller.dashboard_get);
+router.get('/dashboard', JwtAuth, usercontroller.dashboard_get);
 
 
 // update put api

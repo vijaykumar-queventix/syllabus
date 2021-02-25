@@ -13,7 +13,7 @@ const dbConnection = async()=>{
             console.log(`MongDB Connected : ${conn.connection.host}`);
         });
     } catch (error) {
-        console.log('Error while connecting to db' + error);
+        console.log('Error while connecting to db ' + error);
     }
     
 }

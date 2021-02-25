@@ -50,5 +50,8 @@ router.delete('/delete/:id', JwtAuth ,usercontroller.delete)
 // csv post api
 router.post('/csv',usercontroller.csv_post);
 
+// csv get api
+router.get('/csv',usercontroller.csv_get); 
+
 
 module.exports = router

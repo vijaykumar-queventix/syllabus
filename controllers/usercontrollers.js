@@ -247,7 +247,7 @@ exports.csv_post = async (req, res) => {
                 //console.log('##########',data['name']);
                 data[key] = data[key].trim();
             }
-           
+
             //Create a employee Object and assign all values for it to save in database
             var insertedData = new csvModel({
                 name: data['name'],
@@ -255,7 +255,7 @@ exports.csv_post = async (req, res) => {
                 subject: data['subject'],
                 city: data['city']
             });
-            
+
             try {
                 //save in database
                 let savedData = await insertedData.save();
@@ -272,4 +272,42 @@ exports.csv_post = async (req, res) => {
                 })
             }
         })
+}
+
+
+
+exports.csv_get = async (req, res) => {
+
+    var data = await csvModel.find({});
+    var data1 = JSON.parse(JSON.stringify(data));
+    //console.log(data);
+    //console.log("------------------------------------------------------------------");
+    ///console.log(data1);
+
+    try {
+        let writerStream = fs.createWriteStream('output.csv');
+        csv
+            .write(data1, { headers: true }, (chunk) => {
+                console.log(chunk);
+            })
+            .on('finish', () => {
+                //res.send("<a href='/media/vijay/7846B0D246B091FC/syllabus/output.csv' download='output.csv' id='download-link'></a><script>document.getElementById('download-link').click();</script>");
+                console.log('Write finished');
+
+            })
+            .pipe(writerStream);
+
+        return res.status(200).json({
+            'statusCode': 200,
+            'message': '.CSV File Created Successfully'
+        })
+
+
+    } catch (error) {
+        res.status(200).json({
+            'statusCode': 401,
+            'message': 'File not Created',
+            'Error': error
+        })
+    }
 }

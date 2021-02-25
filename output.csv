@@ -1,0 +1,13 @@
+_id,name,age,subject,city,__v
+603634653f38d2883102dbf3,test1,12,science,chandigarh,0
+603634653f38d2883102dbf4,test2,14,math,mohali,0
+603634653f38d2883102dbf5,test3,75,physics,zirakpur,0
+603634653f38d2883102dbf6,test4,45,math,panchkula,0
+60363523d858a28933aee5fc,test1,12,science,chandigarh,0
+60363523d858a28933aee5fd,test2,14,math,mohali,0
+60363523d858a28933aee5fe,test3,75,physics,zirakpur,0
+60363523d858a28933aee5ff,test4,45,math,panchkula,0
+603635640a705089df84cd03,test1,12,science,chandigarh,0
+603635640a705089df84cd04,test2,14,math,mohali,0
+603635640a705089df84cd05,test3,75,physics,zirakpur,0
+603635640a705089df84cd06,test4,45,math,panchkula,0

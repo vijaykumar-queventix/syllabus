@@ -8,7 +8,7 @@ const session = require('express-session');
 const fs = require('fs');
 const csv = require('fast-csv');
 const csvModel = require('../models/forCSV');
-
+const pdf = require('html-pdf');
 const bcrypt = require('bcrypt');
 const { findByIdAndUpdate } = require('../models/userschema');
 
@@ -308,6 +308,29 @@ exports.csv_get = async (req, res) => {
             'statusCode': 401,
             'message': 'File not Created',
             'Error': error
+        })
+    }
+}
+
+// converting html file to pdf
+exports.Create_pdf_post = (req, res) => {
+
+    try {
+        let content = fs.readFileSync('/media/vijay/7846B0D246B091FC/syllabus/ForPdfGenerate.html', 'utf-8');
+        pdf.create(content).toStream((err, stream) => {
+            let writerStream = fs.createWriteStream('generated.pdf');
+            stream.pipe(writerStream);
+            
+            return res.status(200).json({
+                'statusCode': 200,
+                'message': 'Pdf File Created Successfully',
+            })
+        })
+    } catch (error) {
+        return res.status(200).json({
+            'statusCode': 505,
+            'message': 'Cannot create file',
+            'data': error.stack
         })
     }
 }

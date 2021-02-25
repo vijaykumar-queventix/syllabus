@@ -31,7 +31,7 @@ router.get('/login', usercontroller.login_get)
 router.post('/', usercontroller.register_post);
 
 // login post api
-router.post('/login',  usercontroller.login_post);
+router.post('/login', usercontroller.login_post);
 
 
 //dashboard get api
@@ -39,19 +39,27 @@ router.get('/dashboard', JwtAuth, usercontroller.dashboard_get);
 
 
 // update put api
-router.put('/update/:id',JwtAuth,usercontroller.update_put);
+router.put('/update/:id', JwtAuth, usercontroller.update_put);
 
 // delete api
-router.delete('/delete/:id', JwtAuth ,usercontroller.delete)
+router.delete('/delete/:id', JwtAuth, usercontroller.delete)
 
 // upload image api using multer
 // router.post('/upload', upload.single('file'), usercontroller.upload_post)
 
 // csv post api
-router.post('/csv',usercontroller.csv_post);
+router.post('/csv', usercontroller.csv_post);
 
 // csv get api
-router.get('/csv',usercontroller.csv_get); 
+router.get('/csv', usercontroller.csv_get);
+
+
+/**
+ * create pdf using html-pdf module
+ * @ post route
+ */
+
+router.post('/createpdf', usercontroller.Create_pdf_post);
 
 
 module.exports = router

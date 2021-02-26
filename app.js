@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const users = require('./models/userschema');
 const session = require('express-session');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express')
 
 // defining port
 const port = process.env.PORT || 3000;
@@ -36,6 +38,19 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }))
+/**
+ * swagger setup
+ */
+const swaggerDefinition = require('./config/swagger');
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/', userroutes);
 

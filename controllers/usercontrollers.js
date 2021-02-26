@@ -1,5 +1,5 @@
 const usermodel = require('../models/userschema');
-//const uploadModel = require('../model/uploadSchema');
+const uploadModel = require('../models/uploadSchema');
 //const passport = require('passport');
 //const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -16,9 +16,12 @@ const { findByIdAndUpdate } = require('../models/userschema');
 
 const path = require('path');
 
+
+
 exports.register_get = (req, res) => {
     //req.flash('message', 'Success!!');      // sending a flash message while redirecting
     //res.redirect('/login');
+    res.send('working');
 }
 
 exports.login_get = (req, res) => {
@@ -130,19 +133,19 @@ exports.login_post = async (req, res) => {
 
     // finding User data to send in response
     let responseData = await usermodel.findOne({ email: loginEmail });
-    localStorage.setItem('loggedEmail', validuser.email);
-    console.log(token);
-    localStorage.setItem('loggedToken', token);
-    localStorage.setItem('email', "gurpreet@gmail.com");
-    req.session.loggedEmail = "testingsession";
-    res.redirect('/dashboard');
+    ////localStorage.setItem('loggedEmail', validuser.email);
+    //console.log(token);
+    // localStorage.setItem('loggedToken', token);
+    // localStorage.setItem('email', "gurpreet@gmail.com");
+    // req.session.loggedEmail = "testingsession";
+    //res.redirect('/dashboard');
 
 
-    // return res.status(200).send({
-    //     'status': 200,
-    //     'message': 'user logged in ',
-    //     'data': responseData
-    // });
+    return res.status(200).send({
+        'status': 200,
+        'message': 'user logged in ',
+        'data': responseData
+    });
 }
 
 

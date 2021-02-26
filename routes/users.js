@@ -3,27 +3,28 @@ const router = express.Router();
 const usercontroller = require('../controllers/usercontrollers');
 //const { userValidationRules, validate } = require('../validations/userregister');
 const JwtAuth = require('../validations/jwtAuthentication');
-//const multer = require('multer');
+const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const uploadModel = require('../models/uploadSchema');
 
 router.get('/', usercontroller.register_get);
-router.get('/login', usercontroller.login_get)
+//router.get('/login', usercontroller.login_get)
 
 
-// // Multer setup
-// // SET STORAGE
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null,'uploads')
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// })
+// Multer setup
+// SET STORAGE
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null,'uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
 
-// var upload = multer({ storage: storage })
+ var upload = multer({ storage: storage })
 
 
 
@@ -45,7 +46,7 @@ router.put('/update/:id', JwtAuth, usercontroller.update_put);
 router.delete('/delete/:id', JwtAuth, usercontroller.delete)
 
 // upload image api using multer
-// router.post('/upload', upload.single('file'), usercontroller.upload_post)
+ router.post('/upload', upload.single('file'), usercontroller.upload_post)
 
 // csv post api
 router.post('/csv', usercontroller.csv_post);
